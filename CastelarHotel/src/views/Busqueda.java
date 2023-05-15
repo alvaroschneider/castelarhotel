@@ -26,6 +26,8 @@ import javax.swing.ListSelectionModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @SuppressWarnings("serial")
 public class Busqueda extends JFrame {
@@ -123,7 +125,7 @@ public class Busqueda extends JFrame {
         JScrollPane scroll_tableHuespedes = new JScrollPane(tbHuespedes);
         panel.addTab("Huéspedes", new ImageIcon(Busqueda.class.getResource("/imagenes/pessoas.png")), scroll_tableHuespedes, null);
         scroll_tableHuespedes.setVisible(true);
-
+        
         JLabel lblNewLabel_2 = new JLabel("");
         lblNewLabel_2.setIcon(new ImageIcon(Busqueda.class.getResource("/imagenes/Ha-100px.png")));
         lblNewLabel_2.setBounds(56, 51, 104, 107);
@@ -223,7 +225,17 @@ public class Busqueda extends JFrame {
         btnbuscar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                try {
+                    System.out.println("tab: "+panel.getSelectedIndex());
+                    if(panel.getSelectedIndex() == 0){
+                        tbReservas.setModel(db.getReservaPorId(txtBuscar.getText()));
+                    }else if(panel.getSelectedIndex() == 1){
+                        tbHuespedes.setModel(db.getHuespedPorApellido(txtBuscar.getText()));
+                    }
+                    
+                } catch (Exception ex) {
+                    Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         btnbuscar.setLayout(null);
