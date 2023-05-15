@@ -1,5 +1,6 @@
 package views;
 
+import database.Database;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -58,7 +59,7 @@ public class Busqueda extends JFrame {
     /**
      * Create the frame.
      */
-    public Busqueda() {
+    public Busqueda() throws Exception {
         setIconImage(Toolkit.getDefaultToolkit().getImage(Busqueda.class.getResource("/imagenes/lupa2.png")));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 910, 571);
@@ -91,12 +92,16 @@ public class Busqueda extends JFrame {
         tbReservas = new JTable();
         tbReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tbReservas.setFont(new Font("Roboto", Font.PLAIN, 16));
+        Database db = new Database();
+        tbReservas.setModel(db.getReservas());
+        /*
         modelo = (DefaultTableModel) tbReservas.getModel();
         modelo.addColumn("Numero de Reserva");
         modelo.addColumn("Fecha Check In");
         modelo.addColumn("Fecha Check Out");
         modelo.addColumn("Valor");
         modelo.addColumn("Forma de Pago");
+        */
         JScrollPane scroll_table = new JScrollPane(tbReservas);
         panel.addTab("Reservas", new ImageIcon(Busqueda.class.getResource("/imagenes/reservado.png")), scroll_table, null);
         scroll_table.setVisible(true);
@@ -104,7 +109,9 @@ public class Busqueda extends JFrame {
         tbHuespedes = new JTable();
         tbHuespedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tbHuespedes.setFont(new Font("Roboto", Font.PLAIN, 16));
+        tbHuespedes.setModel(db.getHuespedes());
         modeloHuesped = (DefaultTableModel) tbHuespedes.getModel();
+        /*
         modeloHuesped.addColumn("Número de Huesped");
         modeloHuesped.addColumn("Nombre");
         modeloHuesped.addColumn("Apellido");
@@ -112,6 +119,7 @@ public class Busqueda extends JFrame {
         modeloHuesped.addColumn("Nacionalidad");
         modeloHuesped.addColumn("Telefono");
         modeloHuesped.addColumn("Número de Reserva");
+        */
         JScrollPane scroll_tableHuespedes = new JScrollPane(tbHuespedes);
         panel.addTab("Huéspedes", new ImageIcon(Busqueda.class.getResource("/imagenes/pessoas.png")), scroll_tableHuespedes, null);
         scroll_tableHuespedes.setVisible(true);
